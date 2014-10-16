@@ -139,23 +139,10 @@ def info(container):
 
 def ls():
     '''
-    List containers directory
-
-    Note: Directory mode for Ubuntu 12/13 compatibility
+    Using standard command instead of browsing directory.
     '''
 
-    if os.geteuid():
-        base_path = os.path.expanduser("~/.local/share/lxc/")
-    else:
-        base_path = '/var/lib/lxc'
-
-    try:
-        ct_list = [x for x in os.listdir(base_path)
-                   if os.path.isdir(os.path.join(base_path, x))]
-    except OSError:
-        ct_list = []
-
-    return sorted(ct_list)
+    return _run('lxc-ls',output=True).splitlines()
 
 
 def listx():
